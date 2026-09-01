@@ -12,9 +12,13 @@ The goal is to progressively develop a Python application capable of importing l
 
 - Synthetic laboratory data generation
 - Patient and control samples
-- Multiple analyzers
+- Multiple laboratory analyzers
 - Calcium results with realistic distribution
 - CSV data export
+- CSV data import using Pandas
+- Initial dataset inspection and exploration
+- Dataset structure and data type analysis
+- Basic descriptive statistical summary
 
 ## Project Status
 
