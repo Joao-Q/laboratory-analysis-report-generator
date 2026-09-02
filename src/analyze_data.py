@@ -20,24 +20,25 @@ df.info()
 print("\n Statistical summary:")
 print(df.describe())
 
-print("\nData validation:")
+print("\n Data validation:")
 
-print("\nCount null values:")
+print("\n Count null values:")
 print(df.isna().sum())
 
-print("\nCount duplicate rows:")
+print("\n Count duplicate rows:")
 print(df.duplicated().sum())
 
-print("\nVerify if there is duplicate IDs:")
+print("\n Verify if there is duplicate IDs:")
 print(df["Sample_ID"].duplicated().sum())
 
-print("\nShow the unique values of Sample type, Test, Unit and Analyzer:")
+print("\n Show the unique values of Sample type, Specimen Type, Test, Unit and Analyzer:")
 print("Sample type:", df["Sample_Type"].unique())
+print("Sample type:", df["Specimen_Type"].unique())
 print("Test:", df["Test"].unique())
 print("Unit:", df["Unit"].unique())
 print("Analyzer:", df["Analyzer"].unique())
 
-print("\nData type check:")
+print("\n Data type check:")
 df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
 print(df["Date"].dtype)
 
