@@ -19,6 +19,10 @@ The goal is to progressively develop a Python application capable of importing l
 - Initial dataset inspection and exploration
 - Dataset structure and data type analysis
 - Basic descriptive statistical summary
+- Missing value detection
+- Duplicate record and Sample ID detection
+- Categorical value inspection
+- Date validation and conversion
 
 ## Project Status
 
