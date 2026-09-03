@@ -2,19 +2,21 @@ import random
 import csv
 from datetime import datetime, timedelta
 
+"""Generate synthetic laboratory results and export them to CSV."""
+
 # Available laboratory analyzers and their expected workload distribution
 analyzers = ["Analyzer_A", "Analyzer_B"]
 analyzer_weights = [60, 40]
 
 # Most laboratory records represent patient samples rather than controls
 sample_types = ["Patient", "Control"]
-sample_type_weights = [95, 5]
+sample_type_weights = [90, 10]
 
 # Available patient specimen types and their synthetic workload distribution
 specimen_types = ["Serum", "Plasma"]
 specimen_type_weights = [90, 10]
 
-#Reference date used to generate sample dates within the last 90 days
+# Reference date used to generate sample dates within the last 90 days
 today = datetime.now()
 
 # Current synthetic test configuration
@@ -25,12 +27,12 @@ unit = "mg/dL"
 records = []
 
 # Generate synthetic laboratory records
-for i in range(1,101):
+for i in range(1,201):
     sample_id = f"S{i:04d}"
     sample_type = random.choices(population= sample_types, weights= sample_type_weights )[0]
     # Assign a biological specimen to patients and control material to controls
     if sample_type == "Patient":
-            specimen_type = random.choices( population=specimen_types, weights=specimen_type_weights)[0]
+        specimen_type = random.choices( population=specimen_types, weights=specimen_type_weights)[0]
     else:
         specimen_type = "Control_Material"
     analyzer = random.choices(population=analyzers, weights=analyzer_weights)[0]
