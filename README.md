@@ -31,6 +31,11 @@ The goal is to progressively develop a Python application capable of importing l
 - Patient specimen distribution and result comparison
 - Dataset date-range analysis
 - Export of enriched analysis results to CSV
+- Patient result distribution histogram with KDE
+- Reference-range interpretation count chart
+- Patient result comparison by analyzer using box plots
+- Control result monitoring over time
+- Analyzer workload visualization
 
 ## Disclaimer
 
