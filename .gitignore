@@ -9,5 +9,8 @@ venv/
 # Generated reports
 output/
 
+# Reproducible deliberately corrupted test data
+data/laboratory_results_dirty.csv
+
 # VS Code settings
 .vscode/

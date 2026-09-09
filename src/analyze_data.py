@@ -1,8 +1,25 @@
+"""Analyze validated laboratory results and export interpreted data."""
+
+import argparse
+from pathlib import Path
+
 import pandas as pd
 
-"""Import, validate, interpret, and analyze laboratory result data."""
 
-df = pd.read_csv('data/laboratory_results.csv')
+parser = argparse.ArgumentParser(
+    description="Analyze validated laboratory data."
+)
+
+parser.add_argument(
+    "input_file",
+    nargs="?",
+    default="output/validated_results.csv",
+    help="Validated CSV file to analyze.",
+)
+
+args = parser.parse_args()
+
+df = pd.read_csv(args.input_file)
 
 print("\n First rows:")
 print(df.head())
@@ -237,6 +254,11 @@ print("Covered days:", covered_days)
 
 # Export the analyzed dataset with derived interpretation
 output_file_path = "output/analyzed_results.csv"
+
+Path(output_file_path).parent.mkdir(
+    parents=True,
+    exist_ok=True,
+)
 
 df.to_csv(
     output_file_path,

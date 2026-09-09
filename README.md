@@ -36,6 +36,74 @@ The goal is to progressively develop a Python application capable of importing l
 - Patient result comparison by analyzer using box plots
 - Control result monitoring over time
 - Analyzer workload visualization
+- Reproducible generation of deliberately corrupted test data
+- Validation of required columns, results, dates, duplicates, analyzers, and units
+- Separation of valid records from validation errors
+
+## Installation
+
+Create and activate a virtual environment, then install the dependencies:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+```
+
+Run all commands from the project root directory.
+
+## Workflow
+
+The normal workflow uses one validation program for any input dataset:
+
+```text
+CSV data -> validation -> analysis -> visualizations
+```
+
+Generate a new clean synthetic dataset:
+
+```powershell
+python src/generate_data.py
+```
+
+Validate the clean dataset:
+
+```powershell
+python src/validate_data.py
+```
+
+Analyze the validated records:
+
+```powershell
+python src/analyze_data.py
+```
+
+Create and save the visualizations:
+
+```powershell
+python src/visualize_data.py
+```
+
+## Dirty-data test
+
+Generate a reproducible corrupted copy of the clean dataset:
+
+```powershell
+python src/generate_dirty_data.py
+```
+
+Validate that copy:
+
+```powershell
+python src/validate_data.py data/laboratory_results_dirty.csv
+```
+
+The validator writes usable records to `output/validated_results.csv` and
+rejected records, including their detected issues, to
+`output/validation_errors.csv`. Each validation run replaces those two files.
+
+After validating either dataset, run `analyze_data.py` and `visualize_data.py`
+to continue the workflow with the latest validated records.
 
 ## Disclaimer
 
