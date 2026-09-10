@@ -6,7 +6,7 @@ A Python project for generating, analyzing, and reporting synthetic laboratory d
 
 This project simulates a laboratory data analysis workflow using synthetic data.
 
-The goal is to progressively develop a Python application capable of importing laboratory results, analyzing key metrics, generating visualizations, and producing automated reports.
+The first educational version is complete. It imports synthetic calcium results, validates records, analyzes key metrics, generates five charts, and produces an automatic HTML report.
 
 ## Current Features
 
@@ -43,15 +43,24 @@ The goal is to progressively develop a Python application capable of importing l
 
 ## Installation
 
-Create and activate a virtual environment, then install the dependencies:
+Tested on Windows with Python 3.12.14 in a fresh virtual environment using the
+published repository. Other Python versions and operating systems have not been
+verified.
+
+Download the repository using **Code > Download ZIP** on GitHub and extract it,
+or clone it with Git. Install Python 3.12, then open PowerShell in the project
+folder (the folder containing `README.md` and `requirements.txt`).
+
+Create a virtual environment and install the dependencies:
 
 ```powershell
 python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
 ```
 
-Run all commands from the project root directory.
+Run all commands from the project root directory. The commands below use the
+virtual environment directly, so activation and changes to PowerShell execution
+policy are not required.
 
 ## Workflow
 
@@ -61,34 +70,37 @@ The normal workflow uses one validation program for any input dataset:
 CSV data -> validation -> analysis -> visualizations -> HTML report
 ```
 
-Generate a new clean synthetic dataset:
+The repository includes a sample CSV ready for validation. Optionally generate
+a new clean synthetic dataset (this replaces the included CSV):
 
 ```powershell
-python src/generate_data.py
+.\.venv\Scripts\python.exe src/generate_data.py
 ```
 
 Validate the clean dataset:
 
 ```powershell
-python src/validate_data.py
+.\.venv\Scripts\python.exe src/validate_data.py
 ```
 
 Analyze the validated records:
 
 ```powershell
-python src/analyze_data.py
+.\.venv\Scripts\python.exe src/analyze_data.py
 ```
 
 Create and save the visualizations:
 
 ```powershell
-python src/visualize_data.py
+.\.venv\Scripts\python.exe src/visualize_data.py
 ```
+
+Close each chart window to let the visualization program continue.
 
 Create the HTML report:
 
 ```powershell
-python src/generate_report.py
+.\.venv\Scripts\python.exe src/generate_report.py
 Start-Process output/laboratory_report.html
 ```
 
@@ -107,18 +119,25 @@ dependencies are needed. Keep the five PNGs alongside the HTML when copying or
 sharing the report. Generated files remain excluded from Git. Each successful
 report run replaces the previous HTML file.
 
+## Save as PDF
+
+Open the generated HTML report in Chrome, press **Ctrl + P**, and choose
+**Save as PDF**. Select A4 paper and disable browser headers and footers.
+Check the preview before saving. This is a manual browser export; the Python
+workflow generates HTML, not PDF.
+
 ## Dirty-data test
 
 Generate a reproducible corrupted copy of the clean dataset:
 
 ```powershell
-python src/generate_dirty_data.py
+.\.venv\Scripts\python.exe src/generate_dirty_data.py
 ```
 
 Validate that copy:
 
 ```powershell
-python src/validate_data.py data/laboratory_results_dirty.csv
+.\.venv\Scripts\python.exe src/validate_data.py data/laboratory_results_dirty.csv
 ```
 
 The validator writes usable records to `output/validated_results.csv` and
@@ -136,4 +155,19 @@ decision-making.
 
 ## Project Status
 
-🚧 Work in progress — new features will be added as the data analysis workflow is developed.
+The first educational version is complete for the synthetic calcium workflow.
+
+A fresh download of commit `b486fcf` was tested on Windows with Python 3.12.14:
+
+- Included CSV: 200 accepted records and no rejected records.
+- Newly generated synthetic CSV: 200 accepted records and no rejected records.
+- Deliberately corrupted CSV: 192 accepted records and 9 rejected records.
+- Analysis, all five charts, and the HTML report were generated in each case.
+- The final report opened in Chrome with all five images loading successfully.
+
+The automated check generated charts without opening interactive chart windows.
+New synthetic data are random, so patient/control counts and statistics can vary.
+
+The current analysis is specific to calcium, the configured analyzers, mg/dL units,
+and simplified reference intervals. Other tests or data formats require code
+changes. Future enhancements are optional extensions to this completed scope.
