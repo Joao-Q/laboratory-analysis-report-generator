@@ -39,6 +39,7 @@ The goal is to progressively develop a Python application capable of importing l
 - Reproducible generation of deliberately corrupted test data
 - Validation of required columns, results, dates, duplicates, analyzers, and units
 - Separation of valid records from validation errors
+- Automatic HTML report with result counts, date range, patient interpretations, and five charts
 
 ## Installation
 
@@ -57,7 +58,7 @@ Run all commands from the project root directory.
 The normal workflow uses one validation program for any input dataset:
 
 ```text
-CSV data -> validation -> analysis -> visualizations
+CSV data -> validation -> analysis -> visualizations -> HTML report
 ```
 
 Generate a new clean synthetic dataset:
@@ -84,6 +85,28 @@ Create and save the visualizations:
 python src/visualize_data.py
 ```
 
+Create the HTML report:
+
+```powershell
+python src/generate_report.py
+Start-Process output/laboratory_report.html
+```
+
+The report reads `output/analyzed_results.csv` and reuses the five PNG charts
+created by `visualize_data.py`. It includes total, patient, and control counts,
+the data period, and patient interpretation counts and percentages. Existing
+interpretations are preserved; controls are excluded from the interpretation table.
+
+Run the steps in order after changing the input data. The report generator
+stops with an explanatory message if the CSV is missing or empty, or if a chart
+is missing or older than the CSV. This timestamp check catches charts left over
+from a previous analysis; it does not verify their contents.
+
+Open `output/laboratory_report.html` in a browser. No web server or new Python
+dependencies are needed. Keep the five PNGs alongside the HTML when copying or
+sharing the report. Generated files remain excluded from Git. Each successful
+report run replaces the previous HTML file.
+
 ## Dirty-data test
 
 Generate a reproducible corrupted copy of the clean dataset:
@@ -102,7 +125,7 @@ The validator writes usable records to `output/validated_results.csv` and
 rejected records, including their detected issues, to
 `output/validation_errors.csv`. Each validation run replaces those two files.
 
-After validating either dataset, run `analyze_data.py` and `visualize_data.py`
+After validating either dataset, run `analyze_data.py`, `visualize_data.py`, and `generate_report.py`
 to continue the workflow with the latest validated records.
 
 ## Disclaimer
